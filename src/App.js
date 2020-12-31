@@ -2,11 +2,12 @@ import logo from './logo.svg';
 import React, {Component} from 'react';
 import {CardList} from './components/card-list/card-list.components'
 import {SearchBox} from './components/search-box/search-box.component'
+import {FunButton} from './components/fun-button/fun-button.component'
 import './App.css';
 
 class App extends Component{
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
 
     this.state={
       monsters:[],
@@ -21,8 +22,11 @@ class App extends Component{
     const filteredMonsters=monsters.filter(monster => monster.name.toLowerCase().includes(searchField.toLowerCase()));
     return (
       <div className='App'>
-        <h1 className='head'> Monster Rolodex</h1>
-        <SearchBox placeholder='search monster' handleChanges={e => this.setState({searchField: e.target.value})}/>
+        <h1 className='head'> 
+          <span> Monster Rolodex </span> 
+          <FunButton handleChanges={() => {this.setState((prevState,prevProps) => ({monsters:[...prevState.monsters].sort( () => .5 - Math.random() )}))}}/>
+        </h1>
+        <SearchBox placeholder='search monster' handleChanges={e => this.setState((prevState,prevProps) => ({searchField: e.target.value}))}/>
         <CardList monsters={filteredMonsters}/>
       </div>
     );
